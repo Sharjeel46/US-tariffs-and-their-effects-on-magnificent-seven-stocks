@@ -1,9 +1,11 @@
 {
-  "hash": "71cf142aac348f8357f01bcf68763801",
+  "hash": "51ed2379ee66f70d7f3aadb251413be9",
   "result": {
     "engine": "knitr",
-    "markdown": "---\ntitle: \"US tariffs  effects on magnificent seven stocks\"\nexecute: \n  echo: false\n  warning: false\n  message: false\n\n---\n\n\n::: {.cell}\n\n:::\n\n\n\n::: {.cell}\n\n:::\n\n\n\n::: {.cell}\n\n:::\n\n\nU.S. tariffs on China from 2018 to 2025 have significantly affected domestic capital markets. Tariff announcements hit supply chain–dependent firms like Apple, Tesla, Amazon, and Nvidia the hardest. I gathered stock data using the \"quantmod\" package in R from Yahoo Finance, covering the Magnificent Seven tech stocks from 2018 to 2025..\n\n\n\n   ## 🎥 Stock Price Animation with U.S. Tariff Events\n![](stocks_tariffs.gif)\n\n\n\n\n\n\n\n\n\n\n\n",
-    "supporting": [],
+    "markdown": "---\ntitle: \"US tariffs  effects on magnificent seven stocks\"\nexecute: \n  echo: false\n  warning: false\n  message: false\n\n---\n\n\n::: {.cell}\n\n:::\n\n\n\n::: {.cell}\n\n:::\n\n\n\n::: {.cell}\n\n:::\n\n\nU.S. tariffs on China from 2018 to 2025 have significantly affected domestic capital markets. Tariff announcements hit supply chain–dependent firms like Apple, Tesla, Amazon, and Nvidia the hardest. I gathered stock data using the \"quantmod\" package in R from Yahoo Finance, covering the Magnificent Seven tech stocks from 2018 to 2025..\n\n\n\n## 🎥 Stock Price Animation with U.S. Tariff Events\n![](stocks_tariffs.gif)\n\n\n\n\n\n\n\n\n\n\n\n",
+    "supporting": [
+      "index_files"
+    ],
     "filters": [
       "rmarkdown/pagebreak.lua"
     ],
