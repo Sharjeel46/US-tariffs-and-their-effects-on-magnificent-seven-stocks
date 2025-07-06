@@ -45,40 +45,19 @@ events <- tibble(
 
 ```
 
-
+U.S. tariffs on China from 2018 to 2025 have significantly affected domestic capital markets. Tariff announcements hit supply chain–dependent firms like Apple, Tesla, Amazon, and Nvidia the hardest. I gathered stock data using the quantmod package in R from Yahoo Finance, covering the Magnificent Seven tech stocks from 2018 to 2025..
 
 
 ## 🎥 Stock Price Animation with U.S. Tariff Events
-
-This animation shows how the stock prices of Apple, Microsoft, Amazon, Google, Meta, Nvidia, and Tesla responded to key tariff announcements from 2018 to 2025.
-
 ![](stocks_tariffs.gif)
 
 
 
-### 📊 Description
-
-This project analyzes how U.S. tariffs influenced the stock performance of major tech companies—collectively known as the “Magnificent Seven.” Historical price data was sourced from Yahoo Finance using R’s `quantmod` package and animated with `gganimate`. Tariff announcements such as **$50B Tariff (2018)** and **Consumer Tariffs (2019)** visibly impacted stock movements. This animation clearly visualizes the real-time market response to U.S. trade policy.
-
-"U.S. tariffs on China from 2018 to 2025 had a noticeable impact on domestic capital markets, especially tech stocks."
 
 
 
 
 
 
-
-
-
-
-
-This project analyzes the impact of U.S. tariffs on the "Magnificent Seven" technology stocks—Apple, Microsoft, Amazon, Alphabet, Meta, Nvidia, and Tesla—using historical stock price data sourced from Yahoo Finance via the quantmod package in R. The code processes adjusted closing prices from 2018 through mid-2025, visualizing price movements alongside key tariff event dates. These tariffs, announced and implemented at various points between 2018 and 2025, have significantly influenced market valuations, causing sharp declines and volatility in these tech giants’ stocks. For example, following tariff announcements, the Magnificent Seven collectively lost trillions in market value, with intermittent rebounds when tariffs were paused or eased. By integrating tariff event labels directly into animated stock price charts with gganimate, the project clearly illustrates how trade policy uncertainty and tariff actions have shaped investor sentiment and stock performance over time. This visualization aids in understanding the complex relationship between geopolitical trade decisions and their tangible effects on major technology companies’ market dynamics.
-
-Related
-The data source code for tariffs relies on market reports and news updates
-It impacts tech stocks by causing market value fluctuations and investment uncertainty
-Tariff pauses temporarily boost investor confidence but leave future risks unresolved
-The project highlights how international trade policies influence technology industry dynamics
-Simplified, tariffs affect costs, supply chains, and strategic planning in the tech sector
 
 
