@@ -1,0 +1,1 @@
+# US-tariffs-and-their-effects-on-magnificent-seven-stocks
