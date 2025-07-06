@@ -1,5 +1,7 @@
 project:
   type: website
+  output-dir: docs
+
 
 website:
   title: "US tariffs and their effects on magnificent seven stocks"

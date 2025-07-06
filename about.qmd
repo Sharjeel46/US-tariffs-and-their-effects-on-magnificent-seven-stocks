@@ -2,4 +2,8 @@
 title: "About"
 ---
 
-This site was created for data scinece project 
+I graduated from Forman Christian College. i am finance  enthusiast My github https://github.com/Sharjeel46 Email sharjeeljamalg@gmail.com
+
+This project is about US tariffs effects on magneficent seven stocks. Github repo https://github.com/Sharjeel46/US-tariffs-and-their-effects-on-magnificent-seven-stocks.git
+
+This project was created as a part of Kane’s Data Science Bootcamp https://bootcamp.davidkane.info/
