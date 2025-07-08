@@ -12,20 +12,20 @@ library(scales)       # For formatting prices as dollars
 #| warning: false
 #| results: 'hide'
 
-# Define the Magnificent 7 tickers
+# the Magnificent 7 tickers
 tickers <- c("AAPL", "MSFT", "AMZN", "GOOGL", "NVDA", "META", "TSLA")
 
-# Download Adjusted Closing Prices from Yahoo Finance
+# Adjusted Closing Prices from Yahoo Finance
 getSymbols(tickers, src = "yahoo", from = "2018-01-01", to = Sys.Date())
 
-# Combine and reshape the data to tidy format
+# Combined and reshaped the data to tidy format data
 prices <- map(tickers, ~ Ad(get(.x))) %>%
   reduce(merge) %>%
   `colnames<-`(tickers) %>%
   fortify.zoo(name = "Date") %>%
   pivot_longer(-Date, names_to = "Stock", values_to = "Price")
 
-# Define all tariff event dates and their labels
+# Define all tariffs event dates and their labels
 events <- tibble(
   Date = as.Date(c("2018-03-22", "2018-07-06", "2018-09-24",
                    "2019-05-10", "2019-09-01", "2025-06-15")),
@@ -34,22 +34,22 @@ events <- tibble(
   y_end = c(800, 850, 900, 950, 1000, 1050)
 )
 
-# Ensure all event dates match actual stock price trading days
+# all event dates match actual stock price trading days
 available_dates <- unique(prices$Date)
 
-# Replace missing event dates with closest available dates
+# Replaced missing event dates with closest available dates
 events <- events %>%
   mutate(Date = if_else(Date %in% available_dates, Date,
                         map_dbl(Date, ~ max(available_dates[available_dates <= .x])) %>% as.Date(origin = "1970-01-01")))
 
-# Join each event date with each stock to annotate on the lines
+# Joind each event date with each stock to annotate on the lines
 inline_event_labels <- inner_join(prices, events, by = "Date") %>%
   mutate(Label = paste0(Label, "\n", dollar(Price)))
 
-# Create the animated plot
+#  the animated plot
 p <- ggplot(prices, aes(x = Date, y = Price, color = Stock, group = Stock)) +
 
-  # Price trend lines
+  # Priceing trend lines
   geom_line(linewidth = 1) +
 
   # Red dashed vertical lines for events
@@ -75,7 +75,7 @@ p <- ggplot(prices, aes(x = Date, y = Price, color = Stock, group = Stock)) +
     show.legend = FALSE
   ) +
 
-  # Highlight boxes for all events per stock on their lines
+  #  boxes for all events per stock on their lines
   geom_label(
     data = inline_event_labels,
     aes(x = Date, y = Price, label = Label),
@@ -94,10 +94,10 @@ p <- ggplot(prices, aes(x = Date, y = Price, color = Stock, group = Stock)) +
   ) +
   theme_minimal(base_size = 12) +
 
-  # Animate along time
+  # Animated along time
   transition_reveal(Date)
 
-# Animate and render for 40 seconds
+# Animated and render for 40 seconds
 animate( 
   last_plot,
   p,

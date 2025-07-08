@@ -2,14 +2,16 @@ project:
   type: website
   output-dir: docs
 
-
 website:
-  title: "US tariffs and their effects on magnificent seven stocks"
+  title: "US tariffs and their effects on Magnificent Seven stocks"
   navbar:
     left:
       - href: index.qmd
         text: Home
-      - about.qmd
+      - href: Terminalogies.qmd
+        text: Terminologies
+      - href: about.qmd
+        text: About
 
 format:
   html:
@@ -18,6 +20,7 @@ format:
       - brand
     css: styles.css
     toc: true
+
 
 
 

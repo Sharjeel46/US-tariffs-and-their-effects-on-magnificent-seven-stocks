@@ -1,11 +1,9 @@
 {
-  "hash": "d775921b5295e7e670d484209b3e3126",
+  "hash": "b41a5a3d4384268031ab26460795ee33",
   "result": {
     "engine": "knitr",
     "markdown": "---\ntitle: \"US tariffs  effects on magnificent seven stocks\"\nexecute: \n  echo: false\n  warning: false\n  message: false\n\n---\n\n\n::: {.cell}\n\n:::\n\n\n\n::: {.cell}\n\n:::\n\n\n\n::: {.cell}\n\n:::\n\n\n\n::: {.cell}\n\n:::\n\nU.S. tariffs on China from 2018 to 2025 have significantly affected domestic capital markets. Tariff announcements hit supply chain–dependent firms like Apple, Tesla, Amazon, and Nvidia the hardest. I gathered stock data using the \"quantmod\" package in R from Yahoo Finance, covering the Magnificent Seven tech stocks from 2018 to 2025..\n\n\n\n## 🎥 Stock Price Animation with U.S. Tariff Events\n![](stocks_tariffs.gif)\n\n\n\n\n\n\n\n\n\n\n\n",
-    "supporting": [
-      "index_files"
-    ],
+    "supporting": [],
     "filters": [
       "rmarkdown/pagebreak.lua"
     ],
