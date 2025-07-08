@@ -8,10 +8,12 @@ execute:
 ---
 
 ```{r}
-library(quantmod)  # Get stock data
-library(tidyverse) # Data manipulation & plotting
-library(gganimate) # Animation
-library(gifski)    # GIF rendering
+library(quantmod)     # For fetching financial data
+library(tidyverse)    # For data manipulation and ggplot
+library(gganimate)    # For creating animations
+library(gifski)       # For rendering GIFs
+library(scales)       # For formatting prices as dollars
+
 
 
 ```
@@ -22,29 +24,49 @@ library(gifski)    # GIF rendering
 #| warning: false
 #| results: 'hide'
 
+# Define the Magnificent 7 tickers
 tickers <- c("AAPL", "MSFT", "AMZN", "GOOGL", "NVDA", "META", "TSLA")
+
+# Download Adjusted Closing Prices from Yahoo Finance
 getSymbols(tickers, src = "yahoo", from = "2018-01-01", to = Sys.Date())
 
-# Combine and clean data
-prices <- map(tickers, ~Ad(get(.x))) %>% 
-  reduce(merge) %>% 
-  `colnames<-`(tickers) %>% 
-  fortify.zoo(name = "Date") %>% 
+# Combine and reshape the data to tidy format
+prices <- map(tickers, ~ Ad(get(.x))) %>%
+  reduce(merge) %>%
+  `colnames<-`(tickers) %>%
+  fortify.zoo(name = "Date") %>%
   pivot_longer(-Date, names_to = "Stock", values_to = "Price")
+
 
 ```
 
 ```{r}
+# Define all tariff event dates and their labels
 events <- tibble(
   Date = as.Date(c("2018-03-22", "2018-07-06", "2018-09-24",
-                  "2019-05-10", "2019-09-01", "2025-06-15")),
+                   "2019-05-10", "2019-09-01", "2025-06-15")),
   Label = c("$50B Tariff", "First Tariff", "$200B Tariffs",
-           "25% Increase", "Consumer Tariffs", "New Tariff"),
-  y_end = c(800, 850, 900, 950, 1000, 1050) # Line stopping points
+            "25% Increase", "Consumer Tariffs", "New Tariff"),
+  y_end = c(800, 850, 900, 950, 1000, 1050)
 )
+
+# Ensure all event dates match actual stock price trading days
+available_dates <- unique(prices$Date)
+
+# Replace missing event dates with closest available dates
+events <- events %>%
+  mutate(Date = if_else(Date %in% available_dates, Date,
+                        map_dbl(Date, ~ max(available_dates[available_dates <= .x])) %>% as.Date(origin = "1970-01-01")))
+
 
 ```
 
+```{r}
+# Join each event date with each stock to annotate on the lines
+inline_event_labels <- inner_join(prices, events, by = "Date") %>%
+  mutate(Label = paste0(Label, "\n", dollar(Price)))
+
+```
 U.S. tariffs on China from 2018 to 2025 have significantly affected domestic capital markets. Tariff announcements hit supply chain–dependent firms like Apple, Tesla, Amazon, and Nvidia the hardest. I gathered stock data using the "quantmod" package in R from Yahoo Finance, covering the Magnificent Seven tech stocks from 2018 to 2025..
 
 
