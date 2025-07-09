@@ -74,6 +74,11 @@ U.S. tariffs on China from 2018 to 2025 have significantly affected domestic cap
 ## 🎥 Stock Price Animation with U.S. Tariff Events
 ![](stocks_tariffs.gif)
 
+**Discripption**
+The animated graph shows the stock prices (in USD) of the Magnificent Seven from 2018 to 2025. Key U.S.–China tariff events are marked with red dashed lines. At the start of each tariff event, there is a noticeable drop in the prices of supply chain–dependent stocks like Apple, Tesla, and Nvidia. A yellow box highlights Apple’s stock price at the beginning of each event.
+
+This is a raw data visualization that includes all major factors affecting these stocks. The exact impact of tariffs on each stock will be analyzed in the main project using regression and other statistical tools.
+
 
 
 
