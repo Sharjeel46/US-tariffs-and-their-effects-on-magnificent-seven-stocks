@@ -1,0 +1,30 @@
+[
+  {
+    "objectID": "Terminalogies.html",
+    "href": "Terminalogies.html",
+    "title": "Terminalogies",
+    "section": "",
+    "text": "Magnificent seven are the top-performing stocks in the S&P 500, collectively accounting for nearly one-third of the index’s total market capitalization. These include Apple, Alphabet (Google), Meta, Tesla, NVIDIA, Amazon, and Microsoft.\nTariffs are trade policy instruments — essentially taxes imposed by a government on imported goods — used to protect domestic industries from foreign competition, raise revenue, or influence trade balances.\nTariffs Events are the dates on which specific tariffs were announced Mar 22, 2018 – “$50B Tariff”: U.S. announces tariffs on $50B of Chinese goods over IP theft.\nJul 6, 2018 – “First Tariff”: First wave of 25% tariffs on $34B Chinese imports takes effect.\nSep 24, 2018 – “$200B Tariffs”: U.S. hits $200B of Chinese goods with 10% tariffs, escalating the trade war.\nMay 10, 2019 – “25% Increase”: Tariffs on $200B of Chinese goods raised from 10% to 25%.\nSep 1, 2019 – “Consumer Tariffs”: New 15% tariffs begin on $112B in mostly consumer Chinese goods.\nJun 15, 2025 – “New Tariff”: Latest tariff measure introduced, signaling renewed trade pressure.\nDiscripption The animated graph shows the stock prices (in USD) of the Magnificent Seven from 2018 to 2025. Key U.S.–China tariff events are marked with red dashed lines. At the start of each tariff event, there is a noticeable drop in the prices of supply chain–dependent stocks like Apple, Tesla, and Nvidia. A yellow box highlights Apple’s stock price at the beginning of each event.\nThis is a raw data visualization that includes all major factors affecting these stocks. The exact impact of tariffs on each stock will be analyzed in the main project using regression and other statistical tools."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "I am a finance enthusiast.\nMy GitHub | Email: sharjeeljamalg@gmail.com\nThis project is about the effects of U.S. tariffs on the Magnificent Seven stocks.\nGitHub Repo\nThis project was created as part of Kane’s Data Science Bootcamp"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "US tariffs effects on magnificent seven stocks",
+    "section": "",
+    "text": "U.S. tariffs on China from 2018 to 2025 have significantly affected domestic capital markets. Tariff announcements hit supply chain–dependent firms like Apple, Tesla, Amazon, and Nvidia the hardest. I gathered stock data using the “quantmod” package in R from Yahoo Finance, covering the Magnificent Seven tech stocks from 2018 to 2025.."
+  },
+  {
+    "objectID": "index.html#stock-price-animation-with-u.s.-tariff-events",
+    "href": "index.html#stock-price-animation-with-u.s.-tariff-events",
+    "title": "US tariffs effects on magnificent seven stocks",
+    "section": "🎥 Stock Price Animation with U.S. Tariff Events",
+    "text": "🎥 Stock Price Animation with U.S. Tariff Events"
+  }
+]
