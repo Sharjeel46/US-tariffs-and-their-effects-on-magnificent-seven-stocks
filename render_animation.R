@@ -33,6 +33,12 @@ events <- tibble(
             "25% Increase", "Consumer Tariffs", "New Tariff"),
   y_end = c(800, 850, 900, 950, 1000, 1050)
 )
+#shaded window
+tariff_windows <- tibble(
+  start = as.Date(c("2018-07-01", "2018-09-20", "2019-05-05", "2025-06-10")),
+  end   = as.Date(c("2018-07-10", "2018-09-30", "2019-05-15", "2025-06-20")),
+  event = c("First Tariff", "$200B Tariffs", "25% Increase", "New Tariff")
+)
 
 # all event dates match actual stock price trading days
 available_dates <- unique(prices$Date)
@@ -48,9 +54,17 @@ inline_event_labels <- inner_join(prices, events, by = "Date") %>%
 
 #  the animated plot
 p <- ggplot(prices, aes(x = Date, y = Price, color = Stock, group = Stock)) +
-
-  # Priceing trend lines
+  
+  # Pricing trend lines
   geom_line(linewidth = 1) +
+  
+  # 🔴 Red shaded tariff periods
+  geom_rect(
+    data = tariff_windows,
+    aes(xmin = start, xmax = end, ymin = -Inf, ymax = Inf),
+    fill = "red", alpha = 0.12,
+    inherit.aes = FALSE
+  ) +
 
   # Red dashed vertical lines for events
   geom_segment(
@@ -75,7 +89,7 @@ p <- ggplot(prices, aes(x = Date, y = Price, color = Stock, group = Stock)) +
     show.legend = FALSE
   ) +
 
-  #  boxes for all events per stock on their lines
+  # Inline boxes for all events per stock on their lines
   geom_label(
     data = inline_event_labels,
     aes(x = Date, y = Price, label = Label),
@@ -96,6 +110,7 @@ p <- ggplot(prices, aes(x = Date, y = Price, color = Stock, group = Stock)) +
 
   # Animated along time
   transition_reveal(Date)
+
 
 # Animated and render for 40 seconds
 animate( 
