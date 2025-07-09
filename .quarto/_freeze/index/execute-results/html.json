@@ -1,11 +1,9 @@
 {
-  "hash": "3f3996536f6c034b66414597f94e88ab",
+  "hash": "b13f7e77bffc3dc02b9e80faec5394fe",
   "result": {
     "engine": "knitr",
-    "markdown": "---\ntitle: \"US tariffs  effects on magnificent seven stocks\"\nexecute: \n  echo: false\n  warning: false\n  message: false\n\n---\n\n\n::: {.cell}\n\n:::\n\n\n\n::: {.cell}\n\n:::\n\n\n\n::: {.cell}\n\n:::\n\n\n\n::: {.cell}\n\n:::\n\nU.S. tariffs on China from 2018 to 2025 have significantly affected domestic capital markets. Tariff announcements hit supply chain–dependent firms like Apple, Tesla, Amazon, and Nvidia the hardest. I gathered stock data using the \"quantmod\" package in R from Yahoo Finance, covering the Magnificent Seven tech stocks from 2018 to 2025..\n\n\n\n## 🎥 Stock Price Animation with U.S. Tariff Events\n![](stocks_tariffs.gif)\n\n**Discripption**\nThe animated graph shows the stock prices (in USD) of the Magnificent Seven from 2018 to 2025. Key U.S.–China tariff events are marked with red dashed lines. At the start of each tariff event, there is a noticeable drop in the prices of supply chain–dependent stocks like Apple, Tesla, and Nvidia. A yellow box highlights Apple’s stock price at the beginning of each event.\n\nThis is a raw data visualization that includes all major factors affecting these stocks. The exact impact of tariffs on each stock will be analyzed in the main project using regression and other statistical tools.\n\n\n\n\n\n\n\n\n\n\n\n",
-    "supporting": [
-      "index_files"
-    ],
+    "markdown": "---\ntitle: \"US tariffs  effects on magnificent seven stocks\"\nexecute: \n  echo: false\n  warning: false\n  message: false\n\n---\n\n\n::: {.cell}\n\n:::\n\n\n\n::: {.cell}\n\n:::\n\n\n\n::: {.cell}\n\n:::\n\n\n\n::: {.cell}\n\n:::\n\nU.S. tariffs on China from 2018 to 2025 have significantly affected domestic capital markets. Tariff announcements hit supply chain–dependent firms like Apple, Tesla, Amazon, and Nvidia the hardest. I gathered stock data using the \"quantmod\" package in R from Yahoo Finance, covering the Magnificent Seven tech stocks from 2018 to 2025..\n\n\n\n## 🎥 Stock Price Animation with U.S. Tariff Events\n![](stocks_tariffs.gif)\n\n**Discription**\nThe animated graph shows the stock prices (in USD) of the Magnificent Seven from 2018 to 2025. Key U.S.–China tariff events are marked with red dashed lines. At the start of each tariff event, there is a noticeable drop in the prices of supply chain–dependent stocks like Apple, Tesla, and Nvidia. A yellow box highlights Apple’s stock price at the beginning of each event.\n\nThis is a raw data visualization that includes all major factors affecting these stocks. The exact impact of tariffs on each stock will be analyzed in the main project using regression and other statistical tools.\n\n\n\n\n\n\n\n\n\n\n\n",
+    "supporting": [],
     "filters": [
       "rmarkdown/pagebreak.lua"
     ],
