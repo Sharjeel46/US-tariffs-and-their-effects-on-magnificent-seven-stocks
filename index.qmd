@@ -23,59 +23,72 @@ library(scales)       # For formatting prices as dollars
 #| message: false
 #| warning: false
 #| results: 'hide'
-
-# Define the Magnificent 7 tickers
+# Stock prices with evets 
+# List of stock ticker symbols (Magnificent Seven)
 tickers <- c("AAPL", "MSFT", "AMZN", "GOOGL", "NVDA", "META", "TSLA")
 
-# Downloaded Adjusted Closing Prices from Yahoo Finance
-getSymbols(tickers, src = "yahoo", from = "2018-01-01", to = Sys.Date())
+# Download Adjusted Closing Prices from Yahoo Finance (only for 2018–2019)
+getSymbols(tickers, src = "yahoo", from = "2018-01-01", to = "2019-12-31")
 
-# Combined and reshaped the data to tidy format 
+# Convert price data to tidy format (Date, Stock, Price)
 prices <- map(tickers, ~ Ad(get(.x))) %>%
-  reduce(merge) %>%
-  `colnames<-`(tickers) %>%
-  fortify.zoo(name = "Date") %>%
-  pivot_longer(-Date, names_to = "Stock", values_to = "Price")
+  reduce(merge) %>%                       # Merge all stock time series
+  `colnames<-`(tickers) %>%              # Rename columns with tickers
+  fortify.zoo(name = "Date") %>%         # Convert to data frame with Date column
+  pivot_longer(-Date, names_to = "Stock", values_to = "Price")  # Long format
+
+
 
 
 ```
 
 ```{r}
-# Define all tariff events dates and their labels
+#Defined events of tariffs 
 events <- tibble(
   Date = as.Date(c("2018-03-22", "2018-07-06", "2018-09-24",
-                   "2019-05-10", "2019-09-01", "2025-06-15")),
+                   "2019-05-10", "2019-09-01")),
   Label = c("$50B Tariff", "First Tariff", "$200B Tariffs",
-            "25% Increase", "Consumer Tariffs", "New Tariff"),
-  y_end = c(800, 850, 900, 950, 1000, 1050)
+            "25% Increase", "Consumer Tariffs"),
+  y_end = c(800, 850, 900, 950, 1000)
 )
 
-#  all event dates match actual stock price trading days
-available_dates <- unique(prices$Date)
-
-# Replacing missing event dates with closest available dates
-events <- events %>%
-  mutate(Date = if_else(Date %in% available_dates, Date,
-                        map_dbl(Date, ~ max(available_dates[available_dates <= .x])) %>% as.Date(origin = "1970-01-01")))
+```
+```{r}
+# Red shaded windows represent key tariff periods (e.g., 5 days around announcement)
+tariff_windows <- tibble(
+  start = as.Date(c("2018-07-01", "2018-09-20", "2019-05-05")),
+  end   = as.Date(c("2018-07-10", "2018-09-30", "2019-05-15")),
+  event = c("First Tariff", "$200B Tariffs", "25% Increase")
+)
 
 
 ```
 
 ```{r}
-# Joined each event date with each stock to annotate on the lines
+# Get all available market dates from the stock data
+available_dates <- unique(prices$Date)
+
+# Replace each event date with the nearest available trading day
+events <- events %>%
+  mutate(Date = if_else(Date %in% available_dates, Date,
+                        map_dbl(Date, ~ max(available_dates[available_dates <= .x])) %>%
+                          as.Date(origin = "1970-01-01")))
+
+
+# Join prices and events to create inline labels like: "$200B Tariffs\n$176.53"
 inline_event_labels <- inner_join(prices, events, by = "Date") %>%
   mutate(Label = paste0(Label, "\n", dollar(Price)))
 
 ```
-U.S. tariffs on China from 2018 to 2025 have significantly affected domestic capital markets. Tariff announcements hit supply chain–dependent firms like Apple, Tesla, Amazon, and Nvidia the hardest. I gathered stock data using the "quantmod" package in R from Yahoo Finance, covering the Magnificent Seven tech stocks from 2018 to 2025..
+U.S. tariffs on China from 2018 to 2019 had significantly affected domestic capital markets. Tariff announcements hit supply chain–dependent firms like Apple, Tesla, Amazon, and Nvidia the hardest. I gathered stock data using the "quantmod" package in R from Yahoo Finance, covering the Magnificent Seven tech stocks from 2018 to 2019.
 
 
 
 ## 🎥 Stock Price Animation with U.S. Tariff Events
 ![](stocks_tariffs.gif)
 
-**Discription**
-The animated graph shows the stock prices (in USD) of the Magnificent Seven from 2018 to 2025. Key U.S.–China tariff events are marked with red dashed lines. At the start of each tariff event, there is a noticeable drop in the prices of supply chain–dependent stocks like Apple, Tesla, and Nvidia.Red lines show the tariff events and stock price decrease at that point. A yellow box highlights Apple’s stock price at the beginning of each event.
+**Description**
+The animated graph shows the stock prices (in USD) of the Magnificent Seven from 2018 to 2019. Key U.S.–China tariff events are marked with red lines. At the start of each tariff event, there is a noticeable drop in the prices of supply chain–dependent stocks like Apple, Tesla, and Nvidia.Red lines show the tariff events and stock price decrease at that point. A yellow box highlights Apple’s stock price at the beginning of each event.
 
 This is a raw data visualization that includes all major factors affecting these stocks. The exact impact of tariffs on each stock will be analyzed in the main project using regression and other statistical tools.
 

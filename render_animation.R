@@ -11,85 +11,90 @@ library(scales)       # For formatting prices as dollars
 #| message: false
 #| warning: false
 #| results: 'hide'
+# Stock prices with evets 
 
-# the Magnificent 7 tickers
+# List of stock ticker symbols (Magnificent Seven)
 tickers <- c("AAPL", "MSFT", "AMZN", "GOOGL", "NVDA", "META", "TSLA")
 
-# Adjusted Closing Prices from Yahoo Finance
-getSymbols(tickers, src = "yahoo", from = "2018-01-01", to = Sys.Date())
+# Download Adjusted Closing Prices from Yahoo Finance (only for 2018–2019)
+getSymbols(tickers, src = "yahoo", from = "2018-01-01", to = "2019-12-31")
 
-# Combined and reshaped the data to tidy format data
+# Convert price data to tidy format (Date, Stock, Price)
 prices <- map(tickers, ~ Ad(get(.x))) %>%
-  reduce(merge) %>%
-  `colnames<-`(tickers) %>%
-  fortify.zoo(name = "Date") %>%
-  pivot_longer(-Date, names_to = "Stock", values_to = "Price")
+  reduce(merge) %>%                       # Merge all stock time series
+  `colnames<-`(tickers) %>%              # Rename columns with tickers
+  fortify.zoo(name = "Date") %>%         # Convert to data frame with Date column
+  pivot_longer(-Date, names_to = "Stock", values_to = "Price")  # Long format
 
-# Define all tariffs event dates and their labels
+#  Defines tariff events BEFORE trying to mutate 
 events <- tibble(
   Date = as.Date(c("2018-03-22", "2018-07-06", "2018-09-24",
-                   "2019-05-10", "2019-09-01", "2025-06-15")),
+                   "2019-05-10", "2019-09-01")),
   Label = c("$50B Tariff", "First Tariff", "$200B Tariffs",
-            "25% Increase", "Consumer Tariffs", "New Tariff"),
-  y_end = c(800, 850, 900, 950, 1000, 1050)
+            "25% Increase", "Consumer Tariffs"),
+  y_end = c(800, 850, 900, 950, 1000)
 )
-#shaded window
+# Red shaded windows represent key tariff periods (e.g., 5 days around announcement)
 tariff_windows <- tibble(
-  start = as.Date(c("2018-07-01", "2018-09-20", "2019-05-05", "2025-06-10")),
-  end   = as.Date(c("2018-07-10", "2018-09-30", "2019-05-15", "2025-06-20")),
-  event = c("First Tariff", "$200B Tariffs", "25% Increase", "New Tariff")
+  start = as.Date(c("2018-07-01", "2018-09-20", "2019-05-05")),
+  end   = as.Date(c("2018-07-10", "2018-09-30", "2019-05-15")),
+  event = c("First Tariff", "$200B Tariffs", "25% Increase")
 )
 
-# all event dates match actual stock price trading days
+
+
+#  all available market dates from the stock data
 available_dates <- unique(prices$Date)
 
-# Replaced missing event dates with closest available dates
+# Replace each event date with the nearest available trading day
 events <- events %>%
   mutate(Date = if_else(Date %in% available_dates, Date,
-                        map_dbl(Date, ~ max(available_dates[available_dates <= .x])) %>% as.Date(origin = "1970-01-01")))
+                        map_dbl(Date, ~ max(available_dates[available_dates <= .x])) %>%
+                          as.Date(origin = "1970-01-01")))
 
-# Joind each event date with each stock to annotate on the lines
+
+# Joined prices and events to create inline labels like: "$200B Tariffs\n$176.53"
 inline_event_labels <- inner_join(prices, events, by = "Date") %>%
   mutate(Label = paste0(Label, "\n", dollar(Price)))
 
-#  the animated plot
+# Creates the animated line plot
 p <- ggplot(prices, aes(x = Date, y = Price, color = Stock, group = Stock)) +
   
-  # Pricing trend lines
+  # Line chart of stock prices
   geom_line(linewidth = 1) +
   
-  # 🔴 Red shaded tariff periods
+  # Red transparent shaded zones during tariff windows
   geom_rect(
     data = tariff_windows,
     aes(xmin = start, xmax = end, ymin = -Inf, ymax = Inf),
     fill = "red", alpha = 0.12,
     inherit.aes = FALSE
   ) +
-
-  # Red dashed vertical lines for events
+  
+  # Red dashed vertical lines for key event dates
   geom_segment(
     data = events,
     aes(x = Date, xend = Date, y = 0, yend = y_end),
     color = "red", linetype = "dashed", linewidth = 0.7,
     inherit.aes = FALSE
   ) +
-
-  # Top-of-chart event name banners
+  
+  # White banners with tariff labels at the top
   geom_label(
     data = events,
     aes(x = Date, y = y_end * 1.05, label = Label),
     fill = "white", color = "black", size = 3.5,
     inherit.aes = FALSE
   ) +
-
-  # Floating price labels at each frame
+  
+  # Floating dollar value label at each point in time
   geom_text(
     aes(label = dollar(Price)),
     size = 2.5, vjust = -1, check_overlap = TRUE,
     show.legend = FALSE
   ) +
-
-  # Inline boxes for all events per stock on their lines
+  
+  # Yellow inline labels showing price at the tariff events
   geom_label(
     data = inline_event_labels,
     aes(x = Date, y = Price, label = Label),
@@ -97,18 +102,18 @@ p <- ggplot(prices, aes(x = Date, y = Price, color = Stock, group = Stock)) +
     size = 3.3, label.size = 0.3, vjust = -1,
     inherit.aes = FALSE
   ) +
-
-  # Scales and styling
+  
+  # Styling
   scale_y_continuous(labels = dollar_format()) +
   scale_color_brewer(palette = "Set1") +
   labs(
-    title = "Stock Prices with U.S. Tariff Events",
+    title = "Trump  Fitst term Tariff Events and Their Impact on Stock Prices",
     subtitle = "Date: {frame_along}",
-    x = "Date", y = "Price (USD)"
+    x = "Date", y = "Stock Price (USD)"
   ) +
   theme_minimal(base_size = 12) +
-
-  # Animated along time
+  
+  # Animate the chart over time
   transition_reveal(Date)
 
 
